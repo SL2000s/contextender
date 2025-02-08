@@ -22,3 +22,8 @@ Issues = "https://github.com/SL2000s/contextender/issues"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.1.0",
+]
