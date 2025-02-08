@@ -1,13 +1,23 @@
 [project]
 name = "contextender"
 version = "0.1.0"
-description = "Add your description here"
+description = "A framework for handling prompts exceeding the context length of your LLM"
 readme = "README.md"
 authors = [
-    { name = "Simon Ljungbeck", email = "simon.ljungbeck@gmail.com" }
+    { name = "Simon Ljungbeck" }
 ]
 requires-python = ">=3.13"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
 dependencies = []
+license = "MIT"
+license-files = ["LICENSE*"]
+
+[project.urls]
+Homepage = "https://github.com/SL2000s/contextender"
+Issues = "https://github.com/SL2000s/contextender/issues"
 
 [build-system]
 requires = ["hatchling"]
