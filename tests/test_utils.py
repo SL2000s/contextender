@@ -47,6 +47,6 @@ def test_separator_longer_than_max_chars():
         " for",
         " test",
         "ing.",
-    ]  # noqa: E501
+    ]
     result = list(text_splitter(text, max_chars, separator))
     assert result == expected
