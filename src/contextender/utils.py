@@ -11,9 +11,11 @@ def find_context_len(llm: callable) -> int:
 def max_tv_values_len(
     template_str: str, template_variables: List[str], max_chars: int
 ) -> int:
-    return (
-        max_chars - len(template_str) + sum(len(x) for x in template_variables)
-    )  # noqa
+    max_len = max_chars - len(template_str)
+    for template_variable in template_variables:
+        search = f"{{{template_variable}}}"
+        max_len += template_str.count(search) * len(search)
+    return max_len
 
 
 def _text_splitter(text: str, max_chars: int):
