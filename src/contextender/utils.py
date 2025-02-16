@@ -1,11 +1,19 @@
 from functools import reduce
-from typing import Generator
+from typing import Generator, List
 
 
 def find_context_len(llm: callable) -> int:
     # TODO: don't hardcode - try prompts of different lengths until failure
     context_len = 20000  # NOTE: 20000 chars corresponds to ~5000 tokens
     return context_len
+
+
+def max_tv_values_len(
+    template_str: str, template_variables: List[str], max_chars: int
+) -> int:
+    return (
+        max_chars - len(template_str) + sum(len(x) for x in template_variables)
+    )  # noqa
 
 
 def _text_splitter(text: str, max_chars: int):
