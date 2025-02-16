@@ -35,16 +35,17 @@ def test_empty_text():
 
 
 def test_separator_longer_than_max_chars():
-    text = "This is a sample text for testing."
+    text = "This is just some sample text for testing."
     max_chars = 5
     separator = "sample"
     expected = [
-        "This",
-        " is a",
-        " samp",
-        "le",
-        " text",
-        " for",
+        "This ",
+        "is ju",
+        "st so",
+        "me ",
+        "sampl",
+        "e tex",
+        "t for",
         " test",
         "ing.",
     ]
