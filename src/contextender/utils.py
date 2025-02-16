@@ -1,3 +1,4 @@
+from functools import reduce
 from typing import Generator
 
 
@@ -15,34 +16,30 @@ def _text_splitter(text: str, max_chars: int):
         start_now = end_now
 
 
-def _yield_split_sb(sb: str, join_str: str):
-    s = join_str.join(sb)
-    for text_part in _text_splitter(s):
-        yield text_part
-
-
 # TODO: change default separator to space ' '?
 def text_splitter(
-    text: str, max_chars: int, separator: str = None
+    text: str, max_chars: int, prefix_separator: str = None
 ) -> Generator[str, None, None]:
-    if isinstance(separator, str) and len(separator) > 0:
+    if isinstance(prefix_separator, str) and len(prefix_separator) > 0:
+        wo_sep_parts = text.split(prefix_separator)
+        text_parts = [prefix_separator + part for part in wo_sep_parts[1:]]
+        if not text.startswith(prefix_separator):
+            text_parts = [wo_sep_parts[0]] + text_parts
+        # TODO: raise warning if too long items
+        text_parts = reduce(
+            lambda x, y: x + list(_text_splitter(y, max_chars)), text_parts, []
+        )  # Split too long iterms (shouln't be any if separator well chosen)
         sb = []
         sb_acc_len = 0
-        for text_part in text.split(separator):
-            if sb_acc_len + len(separator) + len(text_part) < max_chars:
+        for text_part in text_parts:
+            if sb_acc_len + len(text_part) <= max_chars:
                 sb.append(text_part)
+                sb_acc_len += len(text_part)
             else:
-                if len(sb) == 0:
-                    pass
-                else:
-                    # NOTE: should be 1 it. if the separator is well chosen
-                    for s_part in _yield_split_sb(sb, separator):
-                        yield s_part
-                    sb = [separator + text_part]
-                    sb_acc_len = len(sb[0])
-        # NOTE: should be 1 it. if the separator is well chosen
-        for s_part in _yield_split_sb(sb, separator):
-            yield s_part
+                yield "".join(sb)
+                sb = [text_part]
+                sb_acc_len = len(text_part)
+        yield "".join(sb)
     else:
         for text_part in _text_splitter(text, max_chars):
             yield text_part
