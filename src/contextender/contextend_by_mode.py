@@ -1,10 +1,12 @@
+from typing import Callable
+
 from contextender._config import ITEM_CHOOSE_TASK_MODE, SUMMARY_TASK_MODE
 from contextender.summarizer import summarize
 from contextender.utils import find_context_len
 
 
 def contextend(
-    llm: callable,
+    llm: Callable,
     text: str,
     task_mode: str = SUMMARY_TASK_MODE,
     task: str = None,
