@@ -3,7 +3,7 @@ from typing import Callable
 from contextender.utils import max_tv_values_len, text_splitter
 
 
-def split_llm_request(
+def split_llm_request(  # TODO: rename
     llm: Callable,
     llm_context_len: int,
     prompt_template: str,
@@ -24,7 +24,7 @@ def split_llm_request(
     return llm_answers
 
 
-def split_and_join_llm_request(
+def split_join_llm_request(  # TODO: rename
     llm: Callable,
     llm_context_len: int,
     prompt_template: str,
@@ -46,7 +46,7 @@ def split_and_join_llm_request(
     separator.join(post_processed_answers)
 
 
-def iterating_compression_llm_request(
+def iterating_split_llm_request(
     llm: Callable,
     llm_context_len: int,
     text: str,
@@ -66,7 +66,7 @@ def iterating_compression_llm_request(
         return llm(solve_task_immidiately_prompt)
 
     # Initial compression
-    compressions_str = split_and_join_llm_request(
+    compressions_str = split_join_llm_request(
         llm,
         llm_context_len,
         init_compress_prompt_template,
@@ -84,7 +84,7 @@ def iterating_compression_llm_request(
         llm_context_len,
     )
     while len(compressions_str) > max_final_compressions_len:
-        compressions_str = split_and_join_llm_request(
+        compressions_str = split_join_llm_request(
             llm,
             llm_context_len,
             compress_compression_prompt_template,
