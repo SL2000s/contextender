@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, List
 
 from contextender.utils import max_tv_values_len, text_splitter
 
@@ -10,7 +10,7 @@ def split_llm_request(  # TODO: rename
     text_template_variable_name: str,
     text: str,
     text_separator: str,
-):
+) -> List[str]:
     max_text_part_len = max_tv_values_len(
         prompt_template,
         [text_template_variable_name],
@@ -33,7 +33,7 @@ def split_join_llm_request(  # TODO: rename
     text_separator: str,
     post_process: Callable,
     separator: str,
-):
+) -> str:
     llm_answers = split_llm_request(
         llm,
         llm_context_len,
@@ -60,7 +60,7 @@ def iterating_split_llm_request(
     text_separator: str = " ",
     compression_items_prefix: str = "NEW ITEM:\n",
     compression_items_separator: str = "\n\n",
-):
+) -> str:
     # Try to solve task with one single prompt
     if len(solve_task_immidiately_prompt) <= llm_context_len:
         return llm(solve_task_immidiately_prompt)
