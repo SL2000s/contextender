@@ -1,13 +1,19 @@
-from typing import Dict
-
 from contextender.contextend_llm_request import iterating_split_llm_request
 from contextender.summarizer._prompts import (
-    DEFAULT_SUMMARIZE_PROMPTS_TEMPLATE_TEMPLATE_VARIABLES,
-    DEFAULT_TASK_PROMPT,
-    FINAL_SUMMARY_PROMPT,
-    IMMIDIATE_SOLVE_PROMPT_TEMPLATE,
+    DEFAULT_SUMMARY_CONSTRAINTS,
+    DEFAULT_TASK,
+    DEFAULT_TEXT_SEPARATOR,
+    FINAL_SUMMARY_PROMPT_TEMPLATE_TEMPLATE,
+    FINAL_SUMMARY_PROMPT_TEMPLATE_VARIABLE_NAME,
+    IMMIDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE,
+    IMMIDIATE_SOLVE_PROMPT_TEMPLATE_VARIABLE_NAME,
     SUMMARIZE_PROMPT_TEMPLATE_TEMPLATE,
+    SUMMARIZE_PROMPT_TEMPLATE_VARIABLE_NAME,
     SUMMARIZE_SUMMARIES_PROMPT_TEMPLATE_TEMPLATE,
+    SUMMARIZE_SUMMARIES_TEMPLATE_VARIABLE_NAME,
+    SUMMARY_ITEM_PREFIX,
+    SUMMARY_ITEMS_SEPARATOR,
+    TASK2EXTRA_INSTRUCTIONS,
 )
 
 
@@ -15,29 +21,35 @@ def summarize(
     text: str,
     llm: callable,
     llm_context_len: int,
-    immidiate_solve_prompt_template: str = IMMIDIATE_SOLVE_PROMPT_TEMPLATE,
-    summarize_prompt_template_template: str = SUMMARIZE_PROMPT_TEMPLATE_TEMPLATE,  # noqa: E501
-    summarize_prompt_template_template_variables: Dict[
-        str, str
-    ] = DEFAULT_SUMMARIZE_PROMPTS_TEMPLATE_TEMPLATE_VARIABLES,  # noqa: E501
-    summarize_summaries_prompt_template_template: str = SUMMARIZE_SUMMARIES_PROMPT_TEMPLATE_TEMPLATE,  # noqa: E501
-    summarize_summaries_prompt_template_template_variables: Dict[
-        str, str
-    ] = DEFAULT_SUMMARIZE_PROMPTS_TEMPLATE_TEMPLATE_VARIABLES,  # noqa: E501
-    final_summary_prompt_template_template: str = FINAL_SUMMARY_PROMPT,
-    task: str = DEFAULT_TASK_PROMPT,
+    task: str = DEFAULT_TASK,
+    summary_constraints: str = DEFAULT_SUMMARY_CONSTRAINTS,
+    text_separator: str = DEFAULT_TEXT_SEPARATOR,
 ) -> str:
-
-    summarize_prompt_template = summarize_prompt_template_template.format(
-        **summarize_prompt_template_template_variables,
-    )
-    summarize_summaries_prompt_template = (
-        summarize_summaries_prompt_template_template.format(
-            **summarize_summaries_prompt_template_template_variables,
+    immidiate_solve_prompt_template = (
+        IMMIDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE.format(  # noqa: E501
+            **{"task": task},
         )
     )
-    final_summary_prompt_template_template
-    task
+    extra_instructions = TASK2EXTRA_INSTRUCTIONS.format({"task": task})
+    summarize_prompt_template = SUMMARIZE_PROMPT_TEMPLATE_TEMPLATE.format(
+        **{
+            "constraints": summary_constraints,
+            "extra_instructions": extra_instructions,
+        },
+    )
+    summarize_summaries_prompt_template = (
+        SUMMARIZE_SUMMARIES_PROMPT_TEMPLATE_TEMPLATE.format(  # noqa: E501
+            **{
+                "constraints": summary_constraints,
+                "extra_instructions": extra_instructions,
+            },
+        )
+    )
+    final_summary_prompt_template = (
+        FINAL_SUMMARY_PROMPT_TEMPLATE_TEMPLATE.format(  # noqa: E501
+            **{"task": task},
+        )
+    )
     return iterating_split_llm_request(
         text,
         llm,
@@ -45,15 +57,12 @@ def summarize(
         immidiate_solve_prompt_template,
         summarize_prompt_template,
         summarize_summaries_prompt_template,
-        # final_task_prompt_template,
-        # text_template_variable_name,
-        # compressions_template_variable_name,
-        # final_compressions_template_variable_name,
-        # text_separator,
-        # compression_items_prefix,
-        # compression_items_separator,
+        final_summary_prompt_template,
+        IMMIDIATE_SOLVE_PROMPT_TEMPLATE_VARIABLE_NAME,
+        SUMMARIZE_PROMPT_TEMPLATE_VARIABLE_NAME,
+        SUMMARIZE_SUMMARIES_TEMPLATE_VARIABLE_NAME,
+        FINAL_SUMMARY_PROMPT_TEMPLATE_VARIABLE_NAME,
+        text_separator,
+        SUMMARY_ITEM_PREFIX,
+        SUMMARY_ITEMS_SEPARATOR,
     )
-
-
-def summarize_for_task():
-    pass
