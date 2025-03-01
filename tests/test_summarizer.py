@@ -64,11 +64,3 @@ def test_summarize_empty_text():
     )
     result = summarize(text, simulated_llm, llm_context_len)
     assert result == expected
-
-
-def test_infinity_iteration_summarize():  # TODO
-    pass
-
-
-if __name__ == "__main__":  # TODO: remove
-    test_summarize_empty_text()
