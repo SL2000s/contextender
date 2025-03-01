@@ -59,7 +59,7 @@ def iterating_split_llm_request(
     compressions_template_variable_name: str = "compressions",
     final_compressions_template_variable_name: str = "compressions",
     text_separator: str = " ",
-    compression_items_prefix: str = "NEW ITEM:\n",
+    compression_item_prefix: str = "NEW ITEM:\n",
     compression_items_separator: str = "\n\n",
 ) -> str:
     # Try to solve task with one single prompt
@@ -77,7 +77,7 @@ def iterating_split_llm_request(
         init_text_template_variable_name,
         text,
         text_separator,
-        lambda s: compression_items_prefix + s,
+        lambda s: compression_item_prefix + s,
         compression_items_separator,
     )
 
@@ -94,8 +94,8 @@ def iterating_split_llm_request(
             compress_compression_prompt_template,
             compressions_template_variable_name,
             compressions_str,
-            compression_items_prefix,
-            lambda s: compression_items_prefix + s,
+            compression_item_prefix,
+            lambda s: compression_item_prefix + s,
             compression_items_separator,
         )
 
