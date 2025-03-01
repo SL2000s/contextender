@@ -21,7 +21,7 @@ def split_llm_request(
         raise ValueError("prompt_template is bigger than llm_context_len")
     llm_answers = []
     for text_part in text_splitter(text, max_text_part_len, text_separator):
-        prompt = prompt_template.format(**{text_template_variable_name: text})
+        prompt = prompt_template.format(**{text_template_variable_name: text_part})
         llm_answer = llm(prompt)
         llm_answers.append(llm_answer)
     return llm_answers
