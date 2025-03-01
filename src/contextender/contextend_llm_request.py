@@ -1,5 +1,6 @@
 from typing import Callable, List
 
+from contextender._config import DEFAULT_MAX_COMPRESS_ITERATIONS
 from contextender.utils import max_tv_values_len, text_splitter
 
 
@@ -63,6 +64,7 @@ def iterating_split_llm_request(
     text_separator: str = " ",
     compression_item_prefix: str = "NEW ITEM:\n",
     compression_items_separator: str = "\n\n",
+    max_iterations: int = DEFAULT_MAX_COMPRESS_ITERATIONS,
 ) -> str:
     # Try to solve task with one single prompt
     immidiate_solve_prompt = immidiate_solve_prompt_template.format(
@@ -89,8 +91,13 @@ def iterating_split_llm_request(
         [final_compressions_template_variable_name],
         llm_context_len,
     )
+    count_iterations = 1
     while len(compressions_str) > max_final_compressions_len:
-        compressions_str = split_join_llm_request(
+        if count_iterations > max_iterations:
+            raise RuntimeError(
+                "Maximum iterations reached during compression."
+            )  # noqa: E501
+        new_compressions_str = split_join_llm_request(
             llm,
             llm_context_len,
             compress_compression_prompt_template,
@@ -100,6 +107,10 @@ def iterating_split_llm_request(
             lambda s: compression_item_prefix + s,
             compression_items_separator,
         )
+        if len(new_compressions_str) >= len(compressions_str):
+            raise RuntimeError("Infinite loop detected during compression.")
+        compressions_str = new_compressions_str
+        count_iterations += 1
 
     # Solve task
     final_prompt = final_task_prompt_template.format(
