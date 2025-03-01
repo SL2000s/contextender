@@ -45,7 +45,7 @@ SUMMARIES:
 TASK:
 {task}
 """  # noqa: E501
-FINAL_SUMMARY_PROMPT_TEMPLATE_VARIABLE_NAME = ""
+FINAL_SUMMARY_PROMPT_TEMPLATE_VARIABLE_NAME = "summaries"
 
 DEFAULT_SUMMARY_CONSTRAINTS = (
     "The summary should be one paragraph and at most five sentences."
