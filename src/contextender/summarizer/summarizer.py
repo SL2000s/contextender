@@ -27,27 +27,23 @@ def summarize(
 ) -> str:
     immidiate_solve_prompt_template = (
         IMMIDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE.format(  # noqa: E501
-            **{"task": task},
+            task=task,
         )
     )
-    extra_instructions = TASK2EXTRA_INSTRUCTIONS.format({"task": task})
+    extra_instructions = TASK2EXTRA_INSTRUCTIONS.format(task=task)
     summarize_prompt_template = SUMMARIZE_PROMPT_TEMPLATE_TEMPLATE.format(
-        **{
-            "constraints": summary_constraints,
-            "extra_instructions": extra_instructions,
-        },
+        constraints=summary_constraints,
+        extra_instructions=extra_instructions,
     )
     summarize_summaries_prompt_template = (
-        SUMMARIZE_SUMMARIES_PROMPT_TEMPLATE_TEMPLATE.format(  # noqa: E501
-            **{
-                "constraints": summary_constraints,
-                "extra_instructions": extra_instructions,
-            },
+        SUMMARIZE_SUMMARIES_PROMPT_TEMPLATE_TEMPLATE.format(
+            constraints=summary_constraints,
+            extra_instructions=extra_instructions,
         )
     )
     final_summary_prompt_template = (
         FINAL_SUMMARY_PROMPT_TEMPLATE_TEMPLATE.format(  # noqa: E501
-            **{"task": task},
+            task=task,
         )
     )
     return iterating_split_llm_request(

@@ -12,27 +12,27 @@ IMMIDIATE_SOLVE_PROMPT_TEMPLATE_VARIABLE_NAME = "text"
 
 
 SUMMARIZE_PROMPT_TEMPLATE_TEMPLATE = """You are an assistant summarizing texts.
-Summarize the text below as good as you can (it is a part of a larger text and may have been cut of in the middle of a sentence).  # noqa: E501
+Summarize the text below as good as you can (it is a part of a larger text and may have been cut of in the middle of a sentence).
 Output nothing else than the summary.
 Constraints: {constraints}
 Other instructions: {extra_instructions}
 
 TEXT TO SUMMARIZE:
 {{text}}
-"""
+"""  # noqa: E501
 SUMMARIZE_PROMPT_TEMPLATE_VARIABLE_NAME = "text"
 
 
 SUMMARIZE_SUMMARIES_PROMPT_TEMPLATE_TEMPLATE = """You are an assistant summarizing texts.
-Given the summaries of different parts of a larger text below, write an overall summary of the whole text.  # noqa: E501
-Summaries from some parts of the larger text might be missing, but still write the summary of the whole text as good as you can.  # noqa: E501
+Given the summaries of different parts of a larger text below, write an overall summary of the whole text.
+Summaries from some parts of the larger text might be missing, but still write the summary of the whole text as good as you can.
 Output nothing else than the summary.
 Constraints: {constraints}
 Other instructions: {extra_instructions}
 
 SUMMARIES TO SUMMARIZE:
 {{summaries}}
-"""
+"""  # noqa: E501
 SUMMARIZE_SUMMARIES_TEMPLATE_VARIABLE_NAME = "summaries"
 
 
@@ -40,10 +40,10 @@ FINAL_SUMMARY_PROMPT_TEMPLATE_TEMPLATE = """You are an assistant answering to qu
 Given the summaries of a longer text below, solve the task below.
 
 SUMMARIES:
-{summaries}
+{{summaries}}
 
 TASK:
-{{task}}
+{task}
 """  # noqa: E501
 FINAL_SUMMARY_PROMPT_TEMPLATE_VARIABLE_NAME = ""
 
