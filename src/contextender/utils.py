@@ -38,7 +38,7 @@ def text_splitter(
         # TODO: raise warning if too long items
         text_parts = reduce(
             lambda x, y: x + list(_text_splitter(y, max_chars)), text_parts, []
-        )  # Split too long iterms (shouln't be any if separator well chosen)
+        )  # Split too long iterms (shouldn't be any if separator well chosen)
         sb = []
         sb_acc_len = 0
         for text_part in text_parts:
