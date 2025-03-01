@@ -30,6 +30,8 @@ def _text_splitter(text: str, max_chars: int):
 def text_splitter(
     text: str, max_chars: int, prefix_separator: str = None
 ) -> Generator[str, None, None]:
+    if max_chars <= 0:
+        raise ValueError("max_chars must be greater than 0")
     if isinstance(prefix_separator, str) and len(prefix_separator) > 0:
         wo_sep_parts = text.split(prefix_separator)
         text_parts = [prefix_separator + part for part in wo_sep_parts[1:]]
