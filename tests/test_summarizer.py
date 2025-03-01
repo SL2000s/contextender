@@ -7,13 +7,21 @@ from contextender.summarizer.summarizer import summarize
 
 
 # Simulated LLM function for testing
-def simulated_llm(prompt):
-    return prompt[:50]
+def get_simulated_llm(llm_context_len):
+    def simulated_llm(prompt: str):
+        if not isinstance(prompt, str):
+            raise ValueError("prompt is not a string")
+        if len(prompt) > llm_context_len:
+            raise ValueError("prompt exceeds maximum prompt length")
+        return prompt[:50]
+
+    return simulated_llm
 
 
 def test_immidiate_summarize():
     text = "a" * 50
     llm_context_len = 1 << 30
+    simulated_llm = get_simulated_llm(llm_context_len)
     expected = simulated_llm(
         IMMIDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE.format(
             task=DEFAULT_TASK,
@@ -26,6 +34,7 @@ def test_immidiate_summarize():
 def test_1_iteration_summarize():
     text = "This is a sample text for testing the summarize function." * 12
     llm_context_len = 700
+    simulated_llm = get_simulated_llm(llm_context_len)
     expected = simulated_llm(
         FINAL_SUMMARY_PROMPT_TEMPLATE_TEMPLATE
     )  # NOTE: approximation
@@ -36,6 +45,7 @@ def test_1_iteration_summarize():
 def test_2_iteration_summarize():
     text = "This is a sample text for testing the summarize function." * 50
     llm_context_len = 700
+    simulated_llm = get_simulated_llm(llm_context_len)
     expected = simulated_llm(
         FINAL_SUMMARY_PROMPT_TEMPLATE_TEMPLATE
     )  # NOTE: approximation
@@ -46,6 +56,7 @@ def test_2_iteration_summarize():
 def test_summarize_empty_text():
     text = ""
     llm_context_len = 1 << 30
+    simulated_llm = get_simulated_llm(llm_context_len)
     expected = simulated_llm(
         IMMIDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE.format(task=DEFAULT_TASK).format(
             text=text
