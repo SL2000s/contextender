@@ -46,7 +46,7 @@ def split_join_llm_request(
         text_separator,
     )
     post_processed_answers = [post_process(ans) for ans in llm_answers]
-    separator.join(post_processed_answers)
+    return separator.join(post_processed_answers)
 
 
 def iterating_split_llm_request(
