@@ -3,11 +3,11 @@ from typing import Callable, List
 from contextender.utils import max_tv_values_len, text_splitter
 
 
-def split_llm_request(  # TODO: rename
+def split_llm_request(
     llm: Callable,
     llm_context_len: int,
     prompt_template: str,
-    text_template_variable_name: str,
+    text_template_variable_name: str,  # TODO: input template variables instead
     text: str,
     text_separator: str,
 ) -> List[str]:
@@ -24,11 +24,11 @@ def split_llm_request(  # TODO: rename
     return llm_answers
 
 
-def split_join_llm_request(  # TODO: rename
+def split_join_llm_request(
     llm: Callable,
     llm_context_len: int,
     prompt_template: str,
-    text_template_variable_name: str,
+    text_template_variable_name: str,  # TODO: input template variables instead
     text: str,
     text_separator: str,
     post_process: Callable,
@@ -47,14 +47,15 @@ def split_join_llm_request(  # TODO: rename
 
 
 def iterating_split_llm_request(
+    text: str,
     llm: Callable,
     llm_context_len: int,
-    text: str,
-    solve_task_immidiately_prompt: str,
+    immidiate_solve_prompt_template: str,
     init_compress_prompt_template: str,
     compress_compression_prompt_template: str,
     final_task_prompt_template: str,
-    text_template_variable_name: str = "text",
+    immidiate_text_template_variable_name: str = "text",
+    init_text_template_variable_name: str = "text",
     compressions_template_variable_name: str = "compressions",
     final_compressions_template_variable_name: str = "compressions",
     text_separator: str = " ",
@@ -62,15 +63,18 @@ def iterating_split_llm_request(
     compression_items_separator: str = "\n\n",
 ) -> str:
     # Try to solve task with one single prompt
-    if len(solve_task_immidiately_prompt) <= llm_context_len:
-        return llm(solve_task_immidiately_prompt)
+    immidiate_solve_prompt = immidiate_solve_prompt_template.format(
+        **{immidiate_text_template_variable_name: text}
+    )
+    if len(immidiate_solve_prompt) <= llm_context_len:
+        return llm(immidiate_solve_prompt)
 
     # Initial compression
     compressions_str = split_join_llm_request(
         llm,
         llm_context_len,
         init_compress_prompt_template,
-        text_template_variable_name,
+        init_text_template_variable_name,
         text,
         text_separator,
         lambda s: compression_items_prefix + s,
