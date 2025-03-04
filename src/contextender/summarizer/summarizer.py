@@ -1,3 +1,4 @@
+from contextender._config import DEFAULT_MAX_COMPRESS_ITERATIONS
 from contextender.contextend_llm_request import iterating_split_llm_request
 from contextender.summarizer._prompts import (
     DEFAULT_SUMMARY_CONSTRAINTS,
@@ -24,6 +25,7 @@ def summarize(
     task: str = DEFAULT_TASK,
     summary_constraints: str = DEFAULT_SUMMARY_CONSTRAINTS,
     text_separator: str = DEFAULT_TEXT_SEPARATOR,
+    max_iterations: int = DEFAULT_MAX_COMPRESS_ITERATIONS,
 ) -> str:
     immidiate_solve_prompt_template = (
         IMMIDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE.format(  # noqa: E501
@@ -61,4 +63,5 @@ def summarize(
         text_separator,
         SUMMARY_ITEM_PREFIX,
         SUMMARY_ITEMS_SEPARATOR,
+        max_iterations,
     )
