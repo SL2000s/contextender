@@ -27,10 +27,8 @@ def summarize(
     text_separator: str = DEFAULT_TEXT_SEPARATOR,
     max_iterations: int = DEFAULT_MAX_COMPRESS_ITERATIONS,
 ) -> str:
-    immidiate_solve_prompt_template = (
-        IMMIDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE.format(  # noqa: E501
-            task=task,
-        )
+    immidiate_solve_prompt_template = IMMIDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE.format(
+        task=task,
     )
     extra_instructions = TASK2EXTRA_INSTRUCTIONS.format(task=task)
     summarize_prompt_template = SUMMARIZE_PROMPT_TEMPLATE_TEMPLATE.format(
@@ -43,10 +41,8 @@ def summarize(
             extra_instructions=extra_instructions,
         )
     )
-    final_summary_prompt_template = (
-        FINAL_SUMMARY_PROMPT_TEMPLATE_TEMPLATE.format(  # noqa: E501
-            task=task,
-        )
+    final_summary_prompt_template = FINAL_SUMMARY_PROMPT_TEMPLATE_TEMPLATE.format(
+        task=task,
     )
     return iterating_split_llm_request(
         text,
