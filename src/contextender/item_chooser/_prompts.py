@@ -14,7 +14,6 @@ The full list has been split up into several smaller list.
 Given one of these partial list below, choose the items most relevant for solving the task below.
 The chosen items will proceed for a final selection together with chosen relevant items from the other partial lists.
 Output nothing else than a list of the chosen items on the same format as the list below.
-Constraints: {constraints}
 Other instructions: {extra_instructions}
 
 PARTIAL ITEM LIST:
@@ -23,7 +22,7 @@ PARTIAL ITEM LIST:
 TASK:
 {task}
 """  # noqa: E501
-SUMMARIZE_PROMPT_TEMPLATE_VARIABLE_NAME = "text"
+ITEM_CHOOSE_PROMPT_TEMPLATE_VARIABLE_NAME = "text"
 
 
 FINAL_ITEM_CHOOSE_PROMPT_TEMPLATE_TEMPLATE = """You are an assistant choosing items from a list according to a task.
@@ -37,8 +36,7 @@ TASK:
 """  # noqa: E501
 FINAL_ITEM_CHOOSE_PROMPT_TEMPLATE_VARIABLE_NAME = "items"
 
-DEFAULT_CONSTRAINTS = "-"
 DEFAULT_EXTRA_INSTRUCTIONS = "-"
 
 ITEM_PREFIX = "ITEM:\n"
-ITEMS_SEPARATOR = "\n\n"
+ITEM_SEPARATOR = "\n\n"
