@@ -22,7 +22,7 @@ PARTIAL ITEM LIST:
 TASK:
 {task}
 """  # noqa: E501
-ITEM_CHOOSE_PROMPT_TEMPLATE_VARIABLE_NAME = "text"
+ITEM_CHOOSE_PROMPT_TEMPLATE_VARIABLE_NAME = "items"
 
 
 FINAL_ITEM_CHOOSE_PROMPT_TEMPLATE_TEMPLATE = """You are an assistant choosing items from a list according to a task.
