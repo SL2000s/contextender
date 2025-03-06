@@ -1,6 +1,6 @@
 DEFAULT_TASK = "Summarize this text."
 
-IMMIDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE = """Given the text below, solve the task below.
+IMMEDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE = """Given the text below, solve the task below.
 
 TEXT:
 {{text}}
@@ -8,7 +8,7 @@ TEXT:
 TASK:
 {task}
 """  # noqa: E501
-IMMIDIATE_SOLVE_PROMPT_TEMPLATE_VARIABLE_NAME = "text"
+IMMEDIATE_SOLVE_PROMPT_TEMPLATE_VARIABLE_NAME = "text"
 
 
 SUMMARIZE_PROMPT_TEMPLATE_TEMPLATE = """You are an assistant summarizing texts.

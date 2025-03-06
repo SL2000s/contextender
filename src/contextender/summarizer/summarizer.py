@@ -6,8 +6,8 @@ from contextender.summarizer._prompts import (
     DEFAULT_TEXT_SEPARATOR,
     FINAL_SUMMARY_PROMPT_TEMPLATE_TEMPLATE,
     FINAL_SUMMARY_PROMPT_TEMPLATE_VARIABLE_NAME,
-    IMMIDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE,
-    IMMIDIATE_SOLVE_PROMPT_TEMPLATE_VARIABLE_NAME,
+    IMMEDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE,
+    IMMEDIATE_SOLVE_PROMPT_TEMPLATE_VARIABLE_NAME,
     SUMMARIZE_PROMPT_TEMPLATE_TEMPLATE,
     SUMMARIZE_PROMPT_TEMPLATE_VARIABLE_NAME,
     SUMMARIZE_SUMMARIES_PROMPT_TEMPLATE_TEMPLATE,
@@ -27,7 +27,7 @@ def summarize(
     text_separator: str = DEFAULT_TEXT_SEPARATOR,
     max_iterations: int = DEFAULT_MAX_COMPRESS_ITERATIONS,
 ) -> str:
-    immidiate_solve_prompt_template = IMMIDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE.format(
+    immediate_solve_prompt_template = IMMEDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE.format(
         task=task,
     )
     extra_instructions = TASK2EXTRA_INSTRUCTIONS.format(task=task)
@@ -48,11 +48,11 @@ def summarize(
         text,
         llm,
         llm_context_len,
-        immidiate_solve_prompt_template,
+        immediate_solve_prompt_template,
         summarize_prompt_template,
         summarize_summaries_prompt_template,
         final_summary_prompt_template,
-        IMMIDIATE_SOLVE_PROMPT_TEMPLATE_VARIABLE_NAME,
+        IMMEDIATE_SOLVE_PROMPT_TEMPLATE_VARIABLE_NAME,
         SUMMARIZE_PROMPT_TEMPLATE_VARIABLE_NAME,
         SUMMARIZE_SUMMARIES_TEMPLATE_VARIABLE_NAME,
         FINAL_SUMMARY_PROMPT_TEMPLATE_VARIABLE_NAME,

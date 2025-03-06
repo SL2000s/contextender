@@ -53,11 +53,11 @@ def iterating_split_llm_request(
     text: str,
     llm: Callable,
     llm_context_len: int,
-    immidiate_solve_prompt_template: str,
+    immediate_solve_prompt_template: str,
     init_compress_prompt_template: str,
     compress_compression_prompt_template: str,
     final_task_prompt_template: str,
-    immidiate_text_template_variable_name: str = "text",
+    immediate_text_template_variable_name: str = "text",
     init_text_template_variable_name: str = "text",
     compressions_template_variable_name: str = "compressions",
     final_compressions_template_variable_name: str = "compressions",
@@ -67,11 +67,11 @@ def iterating_split_llm_request(
     max_iterations: int = DEFAULT_MAX_COMPRESS_ITERATIONS,
 ) -> str:
     # Try to solve task with one single prompt
-    immidiate_solve_prompt = immidiate_solve_prompt_template.format(
-        **{immidiate_text_template_variable_name: text}
+    immediate_solve_prompt = immediate_solve_prompt_template.format(
+        **{immediate_text_template_variable_name: text}
     )
-    if len(immidiate_solve_prompt) <= llm_context_len:
-        return llm(immidiate_solve_prompt)
+    if len(immediate_solve_prompt) <= llm_context_len:
+        return llm(immediate_solve_prompt)
 
     # Initial compression
     compressions_str = split_join_llm_request(

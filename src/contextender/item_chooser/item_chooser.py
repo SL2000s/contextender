@@ -6,8 +6,8 @@ from contextender.item_chooser._prompts import (
     DEFAULT_EXTRA_INSTRUCTIONS,
     FINAL_ITEM_CHOOSE_PROMPT_TEMPLATE_TEMPLATE,
     FINAL_ITEM_CHOOSE_PROMPT_TEMPLATE_VARIABLE_NAME,
-    IMMIDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE,
-    IMMIDIATE_SOLVE_PROMPT_TEMPLATE_VARIABLE_NAME,
+    IMMEDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE,
+    IMMEDIATE_SOLVE_PROMPT_TEMPLATE_VARIABLE_NAME,
     ITEM_CHOOSE_PROMPT_TEMPLATE_TEMPLATE,
     ITEM_CHOOSE_PROMPT_TEMPLATE_VARIABLE_NAME,
     ITEM_PREFIX,
@@ -31,7 +31,7 @@ def choose_item(
 ):
     if isinstance(context, list):
         context = list2text(context)
-    immidiate_solve_prompt_template = IMMIDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE.format(
+    immediate_solve_prompt_template = IMMEDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE.format(
         task=task,
     )
     item_choose_prompt_template = ITEM_CHOOSE_PROMPT_TEMPLATE_TEMPLATE.format(
@@ -45,11 +45,11 @@ def choose_item(
         context,
         llm,
         llm_context_len,
-        immidiate_solve_prompt_template,
+        immediate_solve_prompt_template,
         item_choose_prompt_template,
         item_choose_prompt_template,
         final_choose_prompt_template,
-        IMMIDIATE_SOLVE_PROMPT_TEMPLATE_VARIABLE_NAME,
+        IMMEDIATE_SOLVE_PROMPT_TEMPLATE_VARIABLE_NAME,
         ITEM_CHOOSE_PROMPT_TEMPLATE_VARIABLE_NAME,
         ITEM_CHOOSE_PROMPT_TEMPLATE_VARIABLE_NAME,
         FINAL_ITEM_CHOOSE_PROMPT_TEMPLATE_VARIABLE_NAME,

@@ -1,7 +1,7 @@
 from contextender.summarizer._prompts import (
     DEFAULT_TASK,
     FINAL_SUMMARY_PROMPT_TEMPLATE_TEMPLATE,
-    IMMIDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE,
+    IMMEDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE,
 )
 from contextender.summarizer.summarizer import summarize
 
@@ -18,12 +18,12 @@ def get_simulated_llm(llm_context_len):
     return simulated_llm
 
 
-def test_immidiate_summarize():
+def test_immediate_summarize():
     text = "a" * 50
     llm_context_len = 1 << 30
     simulated_llm = get_simulated_llm(llm_context_len)
     expected = simulated_llm(
-        IMMIDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE.format(
+        IMMEDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE.format(
             task=DEFAULT_TASK,
         ).format(text=text)
     )
@@ -58,7 +58,7 @@ def test_summarize_empty_text():
     llm_context_len = 1 << 30
     simulated_llm = get_simulated_llm(llm_context_len)
     expected = simulated_llm(
-        IMMIDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE.format(task=DEFAULT_TASK).format(
+        IMMEDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE.format(task=DEFAULT_TASK).format(
             text=text
         )
     )

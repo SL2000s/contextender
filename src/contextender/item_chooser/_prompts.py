@@ -1,4 +1,4 @@
-IMMIDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE = """Given the list of items below, solve the task below.
+IMMEDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE = """Given the list of items below, solve the task below.
 
 ITEMS:
 {{items}}
@@ -6,7 +6,7 @@ ITEMS:
 TASK:
 {task}
 """  # noqa: E501
-IMMIDIATE_SOLVE_PROMPT_TEMPLATE_VARIABLE_NAME = "items"
+IMMEDIATE_SOLVE_PROMPT_TEMPLATE_VARIABLE_NAME = "items"
 
 
 ITEM_CHOOSE_PROMPT_TEMPLATE_TEMPLATE = """You are an assistant choosing items from a list according to a task.

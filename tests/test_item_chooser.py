@@ -1,7 +1,7 @@
 from contextender.item_chooser._prompts import (
     DEFAULT_EXTRA_INSTRUCTIONS,
     FINAL_ITEM_CHOOSE_PROMPT_TEMPLATE_TEMPLATE,
-    IMMIDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE,
+    IMMEDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE,
     ITEM_CHOOSE_PROMPT_TEMPLATE_TEMPLATE,
 )
 from contextender.item_chooser.item_chooser import choose_item
@@ -19,12 +19,12 @@ def get_simulated_llm(llm_context_len):
     return simulated_llm
 
 
-def test_immidiate_choose_item():
+def test_immediate_choose_item():
     context = ["item1", "item2", "item3"]
     llm_context_len = 1 << 30
     task = "Choose an item"
     simulated_llm = get_simulated_llm(llm_context_len)
-    expected = simulated_llm(IMMIDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE.format(task=task))
+    expected = simulated_llm(IMMEDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE.format(task=task))
     result = choose_item(context, simulated_llm, llm_context_len, task)
     assert result == expected
 
@@ -61,6 +61,11 @@ def test_choose_item_empty_context():
     llm_context_len = 1 << 30
     task = "Choose an item"
     simulated_llm = get_simulated_llm(llm_context_len)
-    expected = simulated_llm(IMMIDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE.format(task=task))
+    expected = simulated_llm(IMMEDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE.format(task=task))
     result = choose_item(context, simulated_llm, llm_context_len, task)
     assert result == expected
+
+
+if __name__ == "__main__":
+    test_1_iteration_choose_item()
+    test_2_iteration_choose_item()
