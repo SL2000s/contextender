@@ -1,6 +1,6 @@
 from typing import Callable, List
 
-from contextender._config import DEFAULT_MAX_COMPRESS_ITERATIONS
+from contextender.config import DEFAULT_MAX_COMPRESS_ITERATIONS
 from contextender.utils import max_tv_values_len, text_splitter
 
 
@@ -85,7 +85,7 @@ def iterating_split_llm_request(
         compression_items_separator,
     )
 
-    # Compress compressions until it is possivle to render final_task_prompt
+    # Compress compressions until it is possible to render final_task_prompt
     max_final_compressions_len = max_tv_values_len(
         final_task_prompt_template,
         [final_compressions_template_variable_name],

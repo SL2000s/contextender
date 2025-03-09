@@ -1,8 +1,8 @@
 from typing import Callable, List, Union
 
-from contextender._config import DEFAULT_MAX_COMPRESS_ITERATIONS
+from contextender.config import DEFAULT_MAX_COMPRESS_ITERATIONS
 from contextender.contextend_llm_request import iterating_split_llm_request
-from contextender.text_item_chooser._prompts import (
+from contextender.text_item_chooser.prompts import (
     DEFAULT_EXTRA_INSTRUCTIONS,
     FINAL_ITEM_CHOOSE_PROMPT_TEMPLATE_TEMPLATE,
     FINAL_ITEM_CHOOSE_PROMPT_TEMPLATE_VARIABLE_NAME,

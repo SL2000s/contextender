@@ -1,4 +1,4 @@
-from contextender.summarizer._prompts import (
+from contextender.summarizer.prompts import (
     DEFAULT_TASK,
     FINAL_SUMMARY_PROMPT_TEMPLATE_TEMPLATE,
     IMMEDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE,

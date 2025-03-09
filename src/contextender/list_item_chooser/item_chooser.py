@@ -1,7 +1,7 @@
 from typing import Callable, List, Union
 
-from contextender._config import DEFAULT_MAX_COMPRESS_ITERATIONS
-from contextender.list_item_chooser._prompts import (
+from contextender.config import DEFAULT_MAX_COMPRESS_ITERATIONS
+from contextender.list_item_chooser.prompts import (
     ITEM_CHOOSE_PROMPT_TEMPLATE,
     ITEMS_TEMPLATE_VARIABLE,
     TASK_TEMPLATE_VARIABLE,

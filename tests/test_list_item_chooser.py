@@ -2,8 +2,8 @@ import re
 
 import pytest
 
-from contextender.list_item_chooser._prompts import ITEM_CHOOSE_PROMPT_TEMPLATE
 from contextender.list_item_chooser.item_chooser import choose_item
+from contextender.list_item_chooser.prompts import ITEM_CHOOSE_PROMPT_TEMPLATE
 from contextender.utils import extract_list
 
 

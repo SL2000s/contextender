@@ -1,6 +1,6 @@
-from contextender._config import DEFAULT_MAX_COMPRESS_ITERATIONS
+from contextender.config import DEFAULT_MAX_COMPRESS_ITERATIONS
 from contextender.contextend_llm_request import iterating_split_llm_request
-from contextender.summarizer._prompts import (
+from contextender.summarizer.prompts import (
     DEFAULT_SUMMARY_CONSTRAINTS,
     DEFAULT_TASK,
     DEFAULT_TEXT_SEPARATOR,
