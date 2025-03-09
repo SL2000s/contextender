@@ -1,3 +1,5 @@
+import ast
+import re
 from functools import reduce
 from typing import Generator, List
 
@@ -55,3 +57,15 @@ def text_splitter(
     else:
         for text_part in _text_splitter(text, max_chars):
             yield text_part
+
+
+def extract_list(llm_response: str):
+    match = re.search(
+        r"\[.*?\]", llm_response, re.DOTALL
+    )  # Extracts the first [...] found
+    if match:
+        try:
+            return ast.literal_eval(match.group(0))
+        except (SyntaxError, ValueError):
+            pass
+    return None  # Return None if no valid list is found

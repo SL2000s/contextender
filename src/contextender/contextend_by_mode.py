@@ -1,8 +1,8 @@
 from typing import Callable, List, Union
 
 from contextender._config import ITEM_CHOOSE_TASK_MODE, SUMMARY_TASK_MODE
-from contextender.item_chooser.item_chooser import choose_item
 from contextender.summarizer.summarizer import summarize
+from contextender.text_item_chooser.item_chooser import choose_item
 from contextender.utils import find_context_len
 
 

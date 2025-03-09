@@ -1,9 +1,9 @@
-from contextender.item_chooser._prompts import (
+from contextender.text_item_chooser._prompts import (
     DEFAULT_EXTRA_INSTRUCTIONS,
     FINAL_ITEM_CHOOSE_PROMPT_TEMPLATE_TEMPLATE,
     IMMEDIATE_SOLVE_PROMPT_TEMPLATE_TEMPLATE,
 )
-from contextender.item_chooser.item_chooser import choose_item
+from contextender.text_item_chooser.item_chooser import choose_item
 
 
 # Simulated LLM function for testing
