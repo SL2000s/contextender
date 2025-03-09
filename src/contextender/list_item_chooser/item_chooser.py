@@ -1,4 +1,4 @@
-from typing import Callable, List
+from typing import Callable, List, Union
 
 from contextender._config import DEFAULT_MAX_COMPRESS_ITERATIONS
 from contextender.list_item_chooser._prompts import (
@@ -19,7 +19,8 @@ def choose_item(
     task_template_variable: str = TASK_TEMPLATE_VARIABLE,
     items_template_variable: str = ITEMS_TEMPLATE_VARIABLE,
     max_iterations=DEFAULT_MAX_COMPRESS_ITERATIONS,
-):
+    single_item_list: bool = False,
+) -> Union[List[str], str]:
     """Choose the most relevant items from a list according to a task.
 
     Args:
@@ -27,8 +28,12 @@ def choose_item(
         llm (Callable): An LLM that takes a prompt as input and outputs the response as a string.
         task (str): The task to solve (e.g. 'Choose the largest integer').
         max_nr_iteration_items (int): The maximum number of items to consider in each iteration/llm request.
+        item_choose_prompt_template (str, optional): The prompt template to use for each iteration. Defaults to ITEM_CHOOSE_PROMPT_TEMPLATE.
+        task_template_variable (str, optional): The template variable for the task in the prompt template. Defaults to TASK_TEMPLATE_VARIABLE.
+        items_template_variable (str, optional): The template variable for the items in the prompt template. Defaults to ITEMS_TEMPLATE_VARIABLE.
         iteration_task (str, optional): The subtask to solve in each iteration (e.g. 'Choose the two largest integers') to pick out the final items to solve the main task. Defaults to None, and in that case, the main task will be used.
         max_iterations (int, optional): The maximum number of iterations. Defaults to DEFAULT_MAX_COMPRESS_ITERATIONS.
+        single_item_list (bool, optional): If False and the final list contains a single item, then the item will be returned and not the list.
 
     Returns:
         List: A list of the most relevant items.
@@ -60,4 +65,6 @@ def choose_item(
     )
     llm_response = llm(final_prompt)
     items = extract_list(llm_response)
+    if not single_item_list and len(items) == 1:
+        return items[0]
     return items
