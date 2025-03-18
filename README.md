@@ -79,4 +79,4 @@ print(chosen_item)
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/SL2000s/contextender/blob/main/LICENSE) file for details.
