@@ -1,5 +1,6 @@
 import ast
 import re
+import warnings
 from functools import reduce
 from typing import Callable, Generator, List, Optional
 
@@ -86,6 +87,10 @@ def text_splitter(
         text_parts = reduce(
             lambda x, y: x + list(_text_splitter(y, max_chars)), text_parts, []
         )  # Split too long items (shouldn't be any if separator well chosen)
+        if len(text_parts) > 1:
+            warnings.warn(
+                "Couldn't find a good index to split without exceeding context length. Try choosing a better separator."  # noqa: E501
+            )
         sb = []
         sb_acc_len = 0
         for text_part in text_parts:
