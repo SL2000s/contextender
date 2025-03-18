@@ -39,4 +39,6 @@ def contextend(
     elif task_mode == ITEM_CHOOSE_TASK_MODE:
         return choose_item(context, llm, llm_context_len, task)
     else:
-        pass  # TODO: raise error "unknown task_mode"
+        raise ValueError(
+            f"Unknown task_mode: {task_mode}. Expected one of: {SUMMARY_TASK_MODE}, {ITEM_CHOOSE_TASK_MODE}."  # noqa: E501
+        )
