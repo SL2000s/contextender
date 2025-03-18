@@ -1,10 +1,19 @@
 import ast
 import re
 from functools import reduce
-from typing import Generator, List
+from typing import Callable, Generator, List, Optional
 
 
-def find_context_len(llm: callable) -> int:
+def find_context_len(llm: Callable) -> int:
+    """
+    Determines the context length supported by the language model (LLM).
+
+    Args:
+        llm (Callable): A callable that interacts with the language model.
+
+    Returns:
+        int: The maximum context length in characters.
+    """
     # TODO: don't hardcode - try prompts of different lengths until failure
     context_len = 20000  # NOTE: 20000 chars corresponds to ~5000 tokens
     return context_len
@@ -13,6 +22,17 @@ def find_context_len(llm: callable) -> int:
 def max_tv_values_len(
     template_str: str, template_variables: List[str], max_chars: int
 ) -> int:
+    """
+    Calculates the maximum length of text that can fit into a template.
+
+    Args:
+        template_str (str): The template string.
+        template_variables (List[str]): A list of variable names in the template.
+        max_chars (int): The maximum number of characters allowed.
+
+    Returns:
+        int: The maximum length of text that can fit into the template.
+    """  # noqa: E501
     max_len = max_chars - len(template_str)
     for template_variable in template_variables:
         search = f"{{{template_variable}}}"
@@ -20,7 +40,17 @@ def max_tv_values_len(
     return max_len
 
 
-def _text_splitter(text: str, max_chars: int):
+def _text_splitter(text: str, max_chars: int) -> Generator[str, None, None]:
+    """
+    Splits a text into smaller chunks of a specified maximum length.
+
+    Args:
+        text (str): The input text to split.
+        max_chars (int): The maximum number of characters per chunk.
+
+    Yields:
+        str: A chunk of the text.
+    """
     start_now = 0
     while start_now < len(text):
         end_now = min(start_now + max_chars, len(text))
@@ -28,10 +58,23 @@ def _text_splitter(text: str, max_chars: int):
         start_now = end_now
 
 
-# TODO: change default separator to space ' '?
 def text_splitter(
-    text: str, max_chars: int, prefix_separator: str = None
+    text: str, max_chars: int, prefix_separator: Optional[str] = None
 ) -> Generator[str, None, None]:
+    """
+    Splits a text into smaller chunks, optionally using a prefix separator.
+
+    Args:
+        text (str): The input text to split.
+        max_chars (int): The maximum number of characters per chunk.
+        prefix_separator (Optional[str], optional): A separator to split the text. Defaults to None.
+
+    Yields:
+        str: A chunk of the text.
+
+    Raises:
+        ValueError: If max_chars is less than or equal to 0.
+    """  # noqa: E501
     if max_chars <= 0:
         raise ValueError("max_chars must be greater than 0")
     if isinstance(prefix_separator, str) and len(prefix_separator) > 0:
@@ -42,7 +85,7 @@ def text_splitter(
         # TODO: raise warning if too long items
         text_parts = reduce(
             lambda x, y: x + list(_text_splitter(y, max_chars)), text_parts, []
-        )  # Split too long iterms (shouldn't be any if separator well chosen)
+        )  # Split too long items (shouldn't be any if separator well chosen)
         sb = []
         sb_acc_len = 0
         for text_part in text_parts:
@@ -59,7 +102,16 @@ def text_splitter(
             yield text_part
 
 
-def extract_list(llm_response: str):
+def extract_list(llm_response: str) -> Optional[List]:
+    """
+    Extracts the first list found in a string response from the language model.
+
+    Args:
+        llm_response (str): The response string from the language model.
+
+    Returns:
+        Optional[List]: The extracted list, or None if no valid list is found.
+    """
     match = re.search(
         r"\[.*?\]", llm_response, re.DOTALL
     )  # Extracts the first [...] found
