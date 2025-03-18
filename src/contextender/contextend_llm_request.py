@@ -8,10 +8,24 @@ def split_llm_request(
     llm: Callable,
     llm_context_len: int,
     prompt_template: str,
-    text_template_variable_name: str,  # TODO: input template variables instead
+    text_template_variable_name: str,
     text: str,
     text_separator: str,
 ) -> List[str]:
+    """
+    Splits a text into smaller parts and processes each part with a language model (LLM).
+
+    Args:
+        llm (Callable): A callable that interacts with the language model.
+        llm_context_len (int): The maximum context length supported by the LLM.
+        prompt_template (str): The template for the prompt to be sent to the LLM.
+        text_template_variable_name (str): The variable name in the template to be replaced with text parts.
+        text (str): The input text to be split and processed.
+        text_separator (str): The separator used to split the text.
+
+    Returns:
+        List[str]: A list of responses from the LLM for each text part.
+    """  # noqa: E501
     max_text_part_len = max_tv_values_len(
         prompt_template,
         [text_template_variable_name],
@@ -31,12 +45,28 @@ def split_join_llm_request(
     llm: Callable,
     llm_context_len: int,
     prompt_template: str,
-    text_template_variable_name: str,  # TODO: input template variables instead
+    text_template_variable_name: str,
     text: str,
     text_separator: str,
     post_process: Callable,
     separator: str,
 ) -> str:
+    """
+    Splits a text, processes each part with a language model (LLM), post-processes the results, and joins them.
+
+    Args:
+        llm (Callable): A callable that interacts with the language model.
+        llm_context_len (int): The maximum context length supported by the LLM.
+        prompt_template (str): The template for the prompt to be sent to the LLM.
+        text_template_variable_name (str): The variable name in the template to be replaced with text parts.
+        text (str): The input text to be split and processed.
+        text_separator (str): The separator used to split the text.
+        post_process (Callable): A callable to post-process each LLM response.
+        separator (str): The separator used to join the post-processed responses.
+
+    Returns:
+        str: The joined result of post-processed LLM responses.
+    """  # noqa: E501
     llm_answers = split_llm_request(
         llm,
         llm_context_len,
@@ -66,6 +96,32 @@ def iterating_split_llm_request(
     compression_items_separator: str = "\n\n",
     max_iterations: int = DEFAULT_MAX_COMPRESS_ITERATIONS,
 ) -> str:
+    """
+    Iteratively processes a text using a language model (LLM) to handle large inputs.
+
+    Args:
+        text (str): The input text to be processed.
+        llm (Callable): A callable that interacts with the language model.
+        llm_context_len (int): The maximum context length supported by the LLM.
+        immediate_solve_prompt_template (str): Template for the immediate solve prompt.
+        init_compress_prompt_template (str): Template for the initial compression prompt.
+        compress_compression_prompt_template (str): Template for compressing intermediate results.
+        final_task_prompt_template (str): Template for the final task prompt.
+        immediate_text_template_variable_name (str, optional): Variable name for the immediate solve text. Defaults to "text".
+        init_text_template_variable_name (str, optional): Variable name for the initial compression text. Defaults to "text".
+        compressions_template_variable_name (str, optional): Variable name for intermediate compressions. Defaults to "compressions".
+        final_compressions_template_variable_name (str, optional): Variable name for final compressions. Defaults to "compressions".
+        text_separator (str, optional): Separator used to split the text. Defaults to " ".
+        compression_item_prefix (str, optional): Prefix for each compression item. Defaults to "NEW ITEM:\n".
+        compression_items_separator (str, optional): Separator for compression items. Defaults to "\n\n".
+        max_iterations (int, optional): Maximum number of iterations for compression. Defaults to DEFAULT_MAX_COMPRESS_ITERATIONS.
+
+    Returns:
+        str: The final processed result from the LLM.
+
+    Raises:
+        RuntimeError: If the maximum number of iterations is reached or an infinite loop is detected.
+    """  # noqa: E501
     # Try to solve task with one single prompt
     immediate_solve_prompt = immediate_solve_prompt_template.format(
         **{immediate_text_template_variable_name: text}
@@ -94,9 +150,7 @@ def iterating_split_llm_request(
     count_iterations = 1
     while len(compressions_str) > max_final_compressions_len:
         if count_iterations > max_iterations:
-            raise RuntimeError(
-                "Maximum iterations reached during compression."
-            )  # noqa: E501
+            raise RuntimeError("Maximum iterations reached during compression.")
         new_compressions_str = split_join_llm_request(
             llm,
             llm_context_len,
