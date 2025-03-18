@@ -7,7 +7,7 @@ from contextender.text_item_chooser.prompts import (
 
 
 # Simulated LLM function for testing
-def get_simulated_llm(llm_context_len):
+def get_simulated_llm(llm_context_len: int):
     def simulated_llm(prompt: str):
         if not isinstance(prompt, str):
             raise ValueError("prompt is not a string")

@@ -18,7 +18,7 @@ def choose_item(
     item_choose_prompt_template: str = ITEM_CHOOSE_PROMPT_TEMPLATE,
     task_template_variable: str = TASK_TEMPLATE_VARIABLE,
     items_template_variable: str = ITEMS_TEMPLATE_VARIABLE,
-    max_iterations=DEFAULT_MAX_COMPRESS_ITERATIONS,
+    max_iterations: int = DEFAULT_MAX_COMPRESS_ITERATIONS,
     single_item_list: bool = False,
 ) -> Union[List[str], str]:
     """Choose the most relevant items from a list according to a task.

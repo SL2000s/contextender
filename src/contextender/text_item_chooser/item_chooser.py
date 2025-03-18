@@ -26,8 +26,8 @@ def choose_item(
     task: str,
     item_separator: str = ITEM_SEPARATOR,
     item_prefix: str = ITEM_PREFIX,
-    extra_iteration_instructions=DEFAULT_EXTRA_INSTRUCTIONS,
-    max_iterations=DEFAULT_MAX_COMPRESS_ITERATIONS,
+    extra_iteration_instructions: str = DEFAULT_EXTRA_INSTRUCTIONS,
+    max_iterations: str = DEFAULT_MAX_COMPRESS_ITERATIONS,
 ):
     if isinstance(context, list):
         context = list2text(context)
