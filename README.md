@@ -38,7 +38,7 @@ Large language models often have limitations on the maximum context length they 
 
 ### Summarize a Large Text
 ```python
-from contextender.summarizer import summarize
+from contextender import summarize
 
 text = "..."  # Large text to summarize
 summary = summarize(
@@ -51,7 +51,7 @@ print(summary)
 
 ### Choose Items from a Long List
 ```python
-from contextender.list_item_chooser import item_chooser
+from contextender import choose_item
 
 items = [101, 42, 123, ...]  # Long list of items (of any type that can be converted to a string)
 chosen_item = item_chooser(
@@ -65,7 +65,7 @@ print(chosen_item)
 
 ### Choose an Item from a Textual List
 ```python
-from contextender.text_item_chooser import text_choose_item
+from contextender import text_choose_item
 
 text = "1. Option A\n2. Option B\n3. Option C\n..."  # Text containing a list
 chosen_item = text_choose_item(
